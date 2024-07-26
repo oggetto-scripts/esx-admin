@@ -1,0 +1,40 @@
+<script lang="ts">
+  import Icon from "../components/Icon.svelte";
+  import type { Player } from "@/types";
+
+  export let players: Player[];
+  export let currentPlayer = 0;
+
+  const onKeyDown = (event: KeyboardEvent) => {
+    if (event.key === "ArrowUp") {
+      if (currentPlayer > 0) {
+        currentPlayer -= 1;
+      } else {
+        currentPlayer = players.length - 1;
+      }
+    } else if (event.key === "ArrowDown") {
+      if (currentPlayer < players.length - 1) {
+        currentPlayer += 1;
+      } else {
+        currentPlayer = 0;
+      }
+    }
+  };
+</script>
+
+<svelte:window on:keydown={onKeyDown} />
+
+<div class="grid grid-cols-1">
+  {#each players as player, i}
+    <span
+      class={`${
+        currentPlayer === i ? "bg-primary text-black" : "bg-secondary"
+      } p-2 rounded-lg cursor-pointer transition font-semibold flex items-center`}
+    >
+      <div class="mr-2">
+        <Icon icon="player" dark={currentPlayer === i} />
+      </div>
+      {player.name} ({player.id})
+    </span>
+  {/each}
+</div>
