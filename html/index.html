@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <script src="nui://game/ui/jquery.js" type="text/javascript"></script>
+    <script type="text/javascript">
+      // This code sucks, but it works for now
+      $(function () {
+        window.onload = (e) => {
+          $("#app").hide();
+          window.addEventListener("message", (event) => {
+            const item = event.data;
+            if (item !== undefined && item.type === "ui") {
+              if (item.display === true) {
+                $("#app").show();
+              } else {
+                $("#app").hide();
+              }
+            }
+          });
+        };
+      });
+    </script>
+  </head>
+  <body>
+    <div id="app"></div>
+    <script type="module" src="/src/main.ts"></script>
+  </body>
+</html>
