@@ -14,6 +14,7 @@ ESX.RegisterServerCallback('esx_admin:get_players', function(src, cb)
         table.insert(playerList, {
             id = xPlayer.source,
             name = xPlayer.getName(),
+            username = GetPlayerName(xPlayer.source),
             job = {
                 name = xPlayer.job.name,
                 grade = xPlayer.job.grade

@@ -1,9 +1,10 @@
 <script lang="ts">
-  import Icon from "../components/Icon.svelte";
+  import Icon from "../Icon.svelte";
   import type { Player } from "@/types";
 
   export let players: Player[];
   export let currentPlayer = 0;
+  let parent: HTMLElement;
 
   const onKeyDown = (event: KeyboardEvent) => {
     if (event.key === "ArrowUp") {
@@ -19,12 +20,20 @@
         currentPlayer = 0;
       }
     }
+
+    const childElement = parent.children[currentPlayer] as HTMLElement;
+    if (childElement && typeof childElement.offsetTop === 'number') {
+      parent.scrollTo({
+        top: childElement.offsetTop - parent.clientHeight,
+        behavior: "smooth",
+      });
+    }
   };
 </script>
 
 <svelte:window on:keydown={onKeyDown} />
 
-<div class="grid grid-cols-1">
+<div class="overflow-y-scroll max-h-80 scroll-smooth no-scrollbar" bind:this={parent}>
   {#each players as player, i}
     <span
       class={`${
@@ -34,7 +43,14 @@
       <div class="mr-2">
         <Icon icon="player" dark={currentPlayer === i} />
       </div>
-      {player.name} ({player.id})
+      {player.username} ({player.id})
     </span>
   {/each}
 </div>
+
+<style>
+  /* Disable native scrollbars */
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+</style>

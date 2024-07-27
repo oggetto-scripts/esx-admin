@@ -6,6 +6,7 @@ interface Job {
 export interface Player {
     id: number;
     name: string;
+    username: string;
     job: Job;
     group: string;
     money: number;
