@@ -1,10 +1,13 @@
 <script lang="ts">
+  import { createEventDispatcher } from "svelte";
   import Icon from "../Icon.svelte";
   import type { Player } from "@/types";
 
   export let players: Player[];
   export let currentPlayer = 0;
   let parent: HTMLElement;
+
+  const dispatch = createEventDispatcher();
 
   const onKeyDown = (event: KeyboardEvent) => {
     if (event.key === "ArrowUp") {
@@ -19,6 +22,8 @@
       } else {
         currentPlayer = 0;
       }
+    } else if (event.key === "Enter") {
+      handleSelect(players[currentPlayer]);
     }
 
     const childElement = parent.children[currentPlayer] as HTMLElement;
@@ -28,6 +33,10 @@
         behavior: "smooth",
       });
     }
+  };
+
+  const handleSelect = (player: Player) => {
+    dispatch("selectPlayer", player);
   };
 </script>
 

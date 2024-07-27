@@ -7,6 +7,7 @@ export interface Player {
     id: number;
     name: string;
     username: string;
+    identifier: string;
     job: Job;
     group: string;
     money: number;

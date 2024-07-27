@@ -15,6 +15,7 @@ ESX.RegisterServerCallback('esx_admin:get_players', function(src, cb)
             id = xPlayer.source,
             name = xPlayer.getName(),
             username = GetPlayerName(xPlayer.source),
+            identifier = xPlayer.getIdentifier(),
             job = {
                 name = xPlayer.job.name,
                 grade = xPlayer.job.grade

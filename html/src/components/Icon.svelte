@@ -27,4 +27,28 @@
     alt="player"
     class="h-5"
   />
+{:else if icon === "weapons"}
+  <img
+    src={`./icons/${dark ? "black" : "white"}/weapons.svg`}
+    alt="weapons"
+    class="h-5"
+  />
+{:else if icon === "economy"}
+  <img
+    src={`./icons/${dark ? "black" : "white"}/economy.svg`}
+    alt="economy"
+    class="h-5"
+  />
+{:else if icon === "inventory"}
+  <img
+    src={`./icons/${dark ? "black" : "white"}/inventory.svg`}
+    alt="inventory"
+    class="h-5"
+  />
+{:else if icon === "actions"}
+  <img
+    src={`./icons/${dark ? "black" : "white"}/actions.svg`}
+    alt="actions"
+    class="h-5"
+  />
 {/if}
