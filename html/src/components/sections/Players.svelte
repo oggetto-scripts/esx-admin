@@ -24,6 +24,8 @@
       }
     } else if (event.key === "Enter") {
       handleSelect(players[currentPlayer]);
+    } else if (event.key === "Backspace") {
+      dispatch("back", {});
     }
 
     const childElement = parent.children[currentPlayer] as HTMLElement;

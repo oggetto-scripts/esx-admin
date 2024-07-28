@@ -1,7 +1,9 @@
 <script lang="ts">
   import type { Player } from "@/types";
-  import Icon from "../Icon.svelte";
+  import Icon from "@/components/Icon.svelte";
   import Actions from "./player/Actions.svelte";
+  import Weapons from "./player/Weapons.svelte";
+  import { createEventDispatcher } from "svelte";
 
   export let player: Player;
 
@@ -27,9 +29,13 @@
     },
   ];
 
-  const onKeyDown = (event: KeyboardEvent) => {
-    if (section !== 0 && event.key !== "Backspace") return;
+  const dispatch = createEventDispatcher();
 
+  const onKeyDown = (event: KeyboardEvent) => {
+    if (section !== 0) {
+      return;
+    }
+    
     if (event.key === "ArrowUp") {
       if (currentOption > 0) {
         currentOption -= 1;
@@ -42,12 +48,10 @@
       } else {
         currentOption = 0;
       }
-    } else if (event.key === "Backspace") {
-      if (section !== 0) {
-        section = 0;
-      }
     } else if (event.key === "Enter") {
       section = currentOption + 1;
+    } else if (event.key === "Backspace" && section === 0) {
+      dispatch("back", {});
     }
   };
 </script>
@@ -68,6 +72,8 @@
       </span>
     {/each}
   </div>
+{:else if section === 1}
+  <Weapons {player} on:back={() => (section = 0)} />
 {:else if section === 4}
-  <Actions {player} />
+  <Actions {player} on:back={() => (section = 0)} />
 {/if}

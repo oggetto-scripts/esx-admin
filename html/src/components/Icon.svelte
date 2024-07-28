@@ -57,4 +57,10 @@
     alt="tx"
     class="h-5"
   />
+{:else if icon === "plus"}
+  <img
+    src={`./icons/${dark ? "black" : "white"}/plus.svg`}
+    alt="add"
+    class="h-5"
+  />
 {/if}

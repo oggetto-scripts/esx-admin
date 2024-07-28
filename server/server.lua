@@ -40,3 +40,29 @@ ESX.RegisterServerCallback('esx_admin:get_players', function(src, cb)
     end
     cb(playerList)
 end)
+
+ESX.RegisterServerCallback('esx_admin:giveWeapon', function(src, cb, id, weapon)
+    if not IsPlayerAceAllowed(src, "command.esxAdmin") then
+        return
+    end
+
+    local xPlayer = ESX.GetPlayerFromId(id)
+    xPlayer.addWeapon(weapon, 0)
+
+    ActionExecuted("giveWeapon", xPlayer.getName() .. " (" .. xPlayer.getIdentifier() .. ")")
+
+    cb()
+end)
+
+ESX.RegisterServerCallback('esx_admin:giveAmmo', function(src, cb, id, weapon, ammo)
+    if not IsPlayerAceAllowed(src, "command.esxAdmin") then
+        return
+    end
+
+    local xPlayer = ESX.GetPlayerFromId(id)
+    xPlayer.addWeaponAmmo(weapon, ammo)
+
+    ActionExecuted("giveAmmo", xPlayer.getName() .. " (" .. xPlayer.getIdentifier() .. ")")
+
+    cb()
+end)

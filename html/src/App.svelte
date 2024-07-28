@@ -34,8 +34,9 @@
   ];
 
   const onKeyDown = (event: KeyboardEvent) => {
-    if (section !== 0 && event.key !== "Backspace" && event.key !== "Escape")
+    if (section !== 0) {
       return;
+    }
 
     if (event.key === "ArrowUp") {
       if (currentOption > 0) {
@@ -54,15 +55,6 @@
       section = 0;
     } else if (event.key === "Enter") {
       section = currentOption + 1;
-    } else if (event.key === "Backspace") {
-      if (section === 4) {
-        section = 1;
-      } else if (section !== 0 && section < 4) {
-        section = 0;
-      } else {
-        sendEvent("close", {});
-        section = 0;
-      }
     }
   };
 
@@ -97,10 +89,10 @@
           {/each}
         </div>
       {:else if section === 1}
-        <Players {players} on:selectPlayer={handlePlayerChange} />
+        <Players {players} on:selectPlayer={handlePlayerChange} on:back={() => (section = 0)} />
       {:else if section === 4}
         <!-- First 3 sections are reserved for the options -->
-        <PlayerSec {player} />
+        <PlayerSec {player} on:back={() => (section = 1)} />
       {/if}
     </div>
     <footer>

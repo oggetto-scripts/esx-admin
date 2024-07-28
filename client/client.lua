@@ -31,6 +31,16 @@ RegisterNUICallback('openInTxAdmin', function(data, cb)
   ExecuteCommand('txadmin ' .. data.id)
 end)
 
+RegisterNUICallback('trapMouse', function(data, cb)
+  SetNuiFocus(true, true)
+  SetNuiFocusKeepInput(false)
+end)
+
+RegisterNUICallback('untrapMouse', function(data, cb)
+  SetNuiFocus(true, false)
+  SetNuiFocusKeepInput(true)
+end)
+
 RegisterNUICallback('close', function(data, cb)
   SendNUIMessage({
     type = "ui",
@@ -40,6 +50,25 @@ RegisterNUICallback('close', function(data, cb)
   SetNuiFocus(false, false)
   SetNuiFocusKeepInput(false)
   display = false
+end)
+
+-- Weapons Events
+RegisterNUICallback('giveWeapon', function(data, cb)
+  ESX.TriggerServerCallback('esx_admin:giveWeapon', function()
+    SendNUIMessage({
+      type = "notification",
+      message = "Weapon given"
+    })
+  end, data.id, data.weapon)
+end)
+
+RegisterNUICallback('giveAmmo', function(data, cb)
+  ESX.TriggerServerCallback('esx_admin:giveAmmo', function()
+    SendNUIMessage({
+      type = "notification",
+      message = "All weapons given"
+    })
+  end, data.id, data.weapon, data.ammo)
 end)
 
 -- Polling the server for player data
