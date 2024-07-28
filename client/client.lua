@@ -27,6 +27,10 @@ AddEventHandler('nui:toggle', function()
   display = not display
 end)
 
+RegisterNUICallback('openInTxAdmin', function(data, cb)
+  ExecuteCommand('txadmin ' .. data.id)
+end)
+
 RegisterNUICallback('close', function(data, cb)
   SendNUIMessage({
     type = "ui",

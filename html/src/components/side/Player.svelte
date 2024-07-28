@@ -15,6 +15,7 @@
   <p class="text-sm text-white/70">
     {player.identifier}
   </p>
+
   <hr class="border-white/10 my-4" />
   <div class="grid grid-cols-3 gap-2 mt-4">
     <div class="flex flex-col items-center">

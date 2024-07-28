@@ -1,35 +1,24 @@
 <script lang="ts">
+  import { sendEvent } from "@/utils/sendEvent";
+  import Icon from "@/components/Icon.svelte";
   import type { Player } from "@/types";
-  import Icon from "../Icon.svelte";
-  import Actions from "./player/Actions.svelte";
 
   export let player: Player;
 
   let currentOption = 0;
-  let section = 0;
 
   const options = [
     {
-      title: "Weapons",
-      icon: "weapons",
-    },
-    {
-      title: "Economy",
-      icon: "economy",
-    },
-    {
-      title: "Inventory",
-      icon: "inventory",
-    },
-    {
-      title: "Actions",
-      icon: "actions",
+      title: "Open in TXAdmin",
+      icon: "tx",
+      action: () => {
+        sendEvent("openInTxAdmin", { id: player.id });
+        sendEvent("close", {});
+      },
     },
   ];
 
   const onKeyDown = (event: KeyboardEvent) => {
-    if (section !== 0 && event.key !== "Backspace") return;
-
     if (event.key === "ArrowUp") {
       if (currentOption > 0) {
         currentOption -= 1;
@@ -42,18 +31,14 @@
       } else {
         currentOption = 0;
       }
-    } else if (event.key === "Backspace") {
-      if (section !== 0) {
-        section = 0;
-      }
     } else if (event.key === "Enter") {
-      section = currentOption + 1;
+      options[currentOption].action();
     }
   };
 </script>
 
 <svelte:window on:keydown={onKeyDown} />
-{#if section === 0}
+<div>
   <div class="grid grid-cols-1">
     {#each options as option, i}
       <span
@@ -68,6 +53,4 @@
       </span>
     {/each}
   </div>
-{:else if section === 4}
-  <Actions {player} />
-{/if}
+</div>

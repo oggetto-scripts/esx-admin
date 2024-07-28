@@ -34,6 +34,9 @@
   ];
 
   const onKeyDown = (event: KeyboardEvent) => {
+    if (section !== 0 && event.key !== "Backspace" && event.key !== "Escape")
+      return;
+
     if (event.key === "ArrowUp") {
       if (currentOption > 0) {
         currentOption -= 1;

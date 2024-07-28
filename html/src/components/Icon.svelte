@@ -51,4 +51,10 @@
     alt="actions"
     class="h-5"
   />
+{:else if icon === "tx"}
+  <img
+    src={`./icons/${dark ? "black" : "white"}/tx.svg`}
+    alt="tx"
+    class="h-5"
+  />
 {/if}
