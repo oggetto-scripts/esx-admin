@@ -54,7 +54,7 @@
     {:else if section === 1}
       <!-- svelte-ignore a11y-autofocus -->
       <input
-        type="text"
+        type="number"
         autofocus={true}
         class="text-white bg-white/5 focus:outline-none border-2 border-primary rounded-lg p-2 w-full"
         placeholder="Enter ammo amount"

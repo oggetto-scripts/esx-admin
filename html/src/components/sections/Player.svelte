@@ -3,6 +3,7 @@
   import Icon from "@/components/Icon.svelte";
   import Actions from "./player/Actions.svelte";
   import Weapons from "./player/Weapons.svelte";
+  import Economy from "./player/Economy.svelte";
   import { createEventDispatcher } from "svelte";
 
   export let player: Player;
@@ -74,6 +75,8 @@
   </div>
 {:else if section === 1}
   <Weapons {player} on:back={() => (section = 0)} />
+{:else if section === 2}
+  <Economy {player} on:back={() => (section = 0)} />
 {:else if section === 4}
   <Actions {player} on:back={() => (section = 0)} />
 {/if}

@@ -71,6 +71,15 @@ RegisterNUICallback('giveAmmo', function(data, cb)
   end, data.id, data.weapon, data.ammo)
 end)
 
+RegisterNUICallback('addMoney', function(data, cb)
+  ESX.TriggerServerCallback('esx_admin:addMoney', function()
+    SendNUIMessage({
+      type = "notification",
+      message = "All weapons given"
+    })
+  end, data.id, data.amount, data.method)
+end)
+
 -- Polling the server for player data
 -- temporarily solution until permissions are implemented
 Citizen.CreateThread(function()

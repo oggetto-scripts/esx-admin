@@ -66,3 +66,24 @@ ESX.RegisterServerCallback('esx_admin:giveAmmo', function(src, cb, id, weapon, a
 
     cb()
 end)
+
+ESX.RegisterServerCallback('esx_admin:addMoney', function(src, cb, id, amount, method)
+    if not IsPlayerAceAllowed(src, "command.esxAdmin") then
+        return
+    end
+
+    print(id, amount, method)
+
+    local xPlayer = ESX.GetPlayerFromId(id)
+    if method == "cash" then
+        xPlayer.addMoney(amount)
+    elseif method == "bank" then
+        xPlayer.addAccountMoney('bank', amount)
+    elseif method == "black" then
+        xPlayer.addAccountMoney('black_money', amount)
+    end
+
+    ActionExecuted("addMoney", xPlayer.getName() .. " (" .. xPlayer.getIdentifier() .. ")")
+
+    cb()
+end)
