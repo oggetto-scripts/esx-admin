@@ -101,6 +101,18 @@ RegisterNUICallback('removeMoney', function(data, cb)
   end, data.id, data.amount, data.method)
 end)
 
+RegisterNUICallback('setMoney', function(data, cb)
+  ESX.TriggerServerCallback('esx_admin:setMoney', function(status, message)
+    SendNUIMessage({
+      type = "notification",
+      data = {
+        message = message,
+        status = status,
+      }
+    })
+  end, data.id, data.amount, data.method)
+end)
+
 -- Polling the server for player data
 -- temporarily solution until permissions are implemented
 Citizen.CreateThread(function()

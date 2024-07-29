@@ -25,7 +25,7 @@
     <div class="pt-4 grid grid-cols-3 gap-x-4">
       <button
         class="p-2 border rounded-xl border-white/5 bg-white/5 hover:border-primary hover:bg-primary/50"
-        on:click={() => handleSelect("cash")}
+        on:click={() => handleSelect("money")}
       >
         Cash
       </button>
@@ -37,7 +37,7 @@
       </button>
       <button
         class="p-2 border rounded-xl border-white/5 bg-white/5 hover:border-primary hover:bg-primary/50"
-        on:click={() => handleSelect("black")}
+        on:click={() => handleSelect("black_money")}
       >
         Black
       </button>

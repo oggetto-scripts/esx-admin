@@ -1,7 +1,7 @@
 <script lang="ts">
   import Icon from "@/components/Icon.svelte";
-  import WeaponSelector from "@/components/selectors/Weapon.svelte";
-  import WeaponAmmoSelector from "@/components/selectors/WeaponAmmo.svelte";
+  import WeaponSelector from "@/components/selectors/weapon/Weapon.svelte";
+  import WeaponAmmoSelector from "@/components/selectors/weapon/WeaponAmmo.svelte";
   import type { Player } from "@/types";
   import { sendEvent } from "@/utils/sendEvent";
   import { createEventDispatcher } from "svelte";

@@ -3,8 +3,9 @@
   import Icon from "@/components/Icon.svelte";
   import type { Player } from "@/types";
   import { createEventDispatcher } from "svelte";
-  import Money from "@/components/selectors/Money.svelte";
-  import MoneyRemove from "@/components/selectors/MoneyRemove.svelte";
+  import Set from "@/components/selectors/money/Set.svelte";
+  import Remove from "@/components/selectors/money/Remove.svelte";
+  import Add from "@/components/selectors/money/Add.svelte";
 
   export let player: Player;
 
@@ -12,6 +13,7 @@
 
   let moneyAdderModal = false;
   let moneyRemoverModal = false;
+  let moneySetterModal = false;
 
   const dispatch = createEventDispatcher();
 
@@ -27,11 +29,20 @@
     },
     {
       title: "Remove Money Ammount",
-      icon: "plus",
+      icon: "minus",
       action: () => {
         sendEvent("trapMouse", {});
         dispatch("selection", {});
         moneyRemoverModal = true;
+      },
+    },
+    {
+      title: "Set Money Ammount",
+      icon: "equals",
+      action: () => {
+        sendEvent("trapMouse", {});
+        dispatch("selection", {});
+        moneySetterModal = true;
       },
     },
   ];
@@ -51,7 +62,7 @@
       }
     } else if (event.key === "Enter") {
       options[currentOption].action();
-    } else if (event.key === "Backspace" && !moneyAdderModal && !moneyRemoverModal) {
+    } else if (event.key === "Backspace" && !moneyAdderModal && !moneyRemoverModal && !moneySetterModal) {
       dispatch("back", {});
     } else if (event.key === "Escape") {
       moneyAdderModal = false;
@@ -61,16 +72,22 @@
 </script>
 
 {#if moneyAdderModal}
-  <Money on:select={(e) => {
+  <Add on:select={(e) => {
     moneyAdderModal = false;
     sendEvent("untrapMouse", {});
     sendEvent("addMoney", { id: player.id, amount: e.detail.quantity, method: e.detail.method });
   }} />
 {:else if moneyRemoverModal}
-  <MoneyRemove on:select={(e) => {
+  <Remove on:select={(e) => {
     moneyRemoverModal = false;
     sendEvent("untrapMouse", {});
     sendEvent("removeMoney", { id: player.id, amount: e.detail.quantity, method: e.detail.method });
+  }} />
+{:else if moneySetterModal}
+  <Set on:select={(e) => {
+    moneySetterModal = false;
+    sendEvent("untrapMouse", {});
+    sendEvent("setMoney", { id: player.id, amount: e.detail.quantity, method: e.detail.method });
   }} />
 {/if}
 
