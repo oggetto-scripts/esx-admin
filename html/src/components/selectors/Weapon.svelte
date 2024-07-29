@@ -32,7 +32,7 @@
     <div class="pt-4 space-y-2">
       {#each results.slice(0, 3) as weapon}
         <button
-          on:click={() => dispatch("select", weapon)}
+          on:click={() => dispatch("select", weapon.id)}
           class="p-2 border w-full border-white/5 bg-white/5 rounded-xl hover:border-primary hover:bg-primary/50 cursor-pointer"
         >
           <h1 class="text-white font-bold">

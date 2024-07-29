@@ -65,14 +65,14 @@
   <WeaponSelector on:select={(e) => {
     weaponSelectorModal = false;
     sendEvent("untrapMouse", {});
-    sendEvent("giveWeapon", { id: player.id, weapon: e });
+    sendEvent("giveWeapon", { id: player.id, weapon: e.detail });
   }} />
 {:else if ammoSelectorModal}
   <WeaponAmmoSelector 
     on:select={(e) => {
       ammoSelectorModal = false;
       sendEvent("untrapMouse", {});
-      sendEvent("giveAmmo", { id: player.id, weapon: e.weapon, ammo: e.ammo });
+      sendEvent("giveAmmo", { id: player.id, type: e.detail.type, ammo: e.detail.ammo });
     }}
   />
 {/if}

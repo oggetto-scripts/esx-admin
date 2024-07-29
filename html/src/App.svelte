@@ -14,9 +14,20 @@
   let players: Player[];
   let player: Player;
 
+  let showNotification = false;
+  let notificationData = { status: 0, message: "" };
+
   useNuiEvent<Player[]>("players", (data) => {
     players = data;
   });
+
+  useNuiEvent<{ status: 0 | 1; message: string }>("notification", (data) => {
+    showNotification = true;
+    notificationData = data;
+  });
+
+  $: showNotification === true &&
+    setTimeout(() => (showNotification = false), 5000);
 
   const options = [
     {
@@ -66,6 +77,24 @@
 
 <svelte:window on:keydown={onKeyDown} />
 
+{#if showNotification}
+  <div
+    class="fixed top-0 right-0 m-4 bg-dark text-white rounded-lg animate-fade-left animate-ease-in-out"
+  >
+    <div class="flex items-center px-4 py-2">
+      <span
+        class={`${
+          notificationData.status === 1 ? "bg-red-500" : "bg-green-500"
+        } w-8 h-8 rounded-full mr-2`}
+      >
+      </span>
+      <div class="p-2 text-lg font-bold">
+        {notificationData.message}
+      </div>
+    </div>
+  </div>
+{/if}
+
 <div class="flex flex-row items-start space-x-4 select-none">
   <main class="bg-dark text-white w-80 p-4 mt-8 ml-8 rounded-xl max-h">
     <div class="flex justify-center mb-5 mt-2">
@@ -89,7 +118,11 @@
           {/each}
         </div>
       {:else if section === 1}
-        <Players {players} on:selectPlayer={handlePlayerChange} on:back={() => (section = 0)} />
+        <Players
+          {players}
+          on:selectPlayer={handlePlayerChange}
+          on:back={() => (section = 0)}
+        />
       {:else if section === 4}
         <!-- First 3 sections are reserved for the options -->
         <PlayerSec {player} on:back={() => (section = 1)} />

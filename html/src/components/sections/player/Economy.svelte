@@ -4,12 +4,14 @@
   import type { Player } from "@/types";
   import { createEventDispatcher } from "svelte";
   import Money from "@/components/selectors/Money.svelte";
+  import MoneyRemove from "@/components/selectors/MoneyRemove.svelte";
 
   export let player: Player;
 
   let currentOption = 0;
 
   let moneyAdderModal = false;
+  let moneyRemoverModal = false;
 
   const dispatch = createEventDispatcher();
 
@@ -21,6 +23,15 @@
         sendEvent("trapMouse", {});
         dispatch("selection", {});
         moneyAdderModal = true;
+      },
+    },
+    {
+      title: "Remove Money Ammount",
+      icon: "plus",
+      action: () => {
+        sendEvent("trapMouse", {});
+        dispatch("selection", {});
+        moneyRemoverModal = true;
       },
     },
   ];
@@ -40,7 +51,7 @@
       }
     } else if (event.key === "Enter") {
       options[currentOption].action();
-    } else if (event.key === "Backspace" && !moneyAdderModal) {
+    } else if (event.key === "Backspace" && !moneyAdderModal && !moneyRemoverModal) {
       dispatch("back", {});
     } else if (event.key === "Escape") {
       moneyAdderModal = false;
@@ -54,6 +65,12 @@
     moneyAdderModal = false;
     sendEvent("untrapMouse", {});
     sendEvent("addMoney", { id: player.id, amount: e.detail.quantity, method: e.detail.method });
+  }} />
+{:else if moneyRemoverModal}
+  <MoneyRemove on:select={(e) => {
+    moneyRemoverModal = false;
+    sendEvent("untrapMouse", {});
+    sendEvent("removeMoney", { id: player.id, amount: e.detail.quantity, method: e.detail.method });
   }} />
 {/if}
 

@@ -1,9 +1,9 @@
 <script lang="ts">
-  import { weapons } from "@/utils/lists/weapons";
+  import { ammos } from "@/utils/lists/ammos";
   import { createEventDispatcher } from "svelte";
 
-  let results = weapons.slice(0, 5);
-  let selectedWeapon = "";
+  let results = ammos.slice(0, 5);
+  let selectedAmmo = "";
   let section = 0;
   let ammo = 0;
 
@@ -12,11 +12,11 @@
   const handleSearch = (query: string) => {
     const lowerCaseQuery = query.toLowerCase();
 
-    results = weapons.filter(
-      (weapon) =>
-        weapon.name.toLowerCase().includes(lowerCaseQuery) ||
-        weapon.id.toLowerCase().includes(lowerCaseQuery) ||
-        weapon.category.toLowerCase().includes(lowerCaseQuery)
+    results = ammos.filter(
+      (ammos) =>
+        ammos.name.toLowerCase().includes(lowerCaseQuery) ||
+        ammos.id.toLowerCase().includes(lowerCaseQuery) ||
+        ammos.category.toLowerCase().includes(lowerCaseQuery)
     );
   };
 </script>
@@ -37,7 +37,7 @@
         {#each results.slice(0, 3) as weapon}
           <button
             on:click={() => {
-              selectedWeapon = weapon.name;
+              selectedAmmo = weapon.id;
               section = 1;
             }}
             class="p-2 border w-full border-white/5 bg-white/5 rounded-xl hover:border-primary hover:bg-primary/50 cursor-pointer"
@@ -46,7 +46,7 @@
               {weapon.name}
             </h1>
             <p class="text-white/30 text-sm">
-              {weapon.id} (part of {weapon.category})
+              Usable for {weapon.category} weapons
             </p>
           </button>
         {/each}
@@ -65,7 +65,7 @@
         <button
           class="p-2 border border-white/5 bg-white/5 rounded-xl hover:border-primary hover:bg-primary/50 cursor-pointer"
           on:click={() => {
-            dispatch("select", { weapon: selectedWeapon, ammo: 50 });
+            dispatch("select", { type: selectedAmmo, ammo: 50 });
           }}
         >
           +50
@@ -73,7 +73,7 @@
         <button
           class="p-2 border border-white/5 bg-white/5 rounded-xl hover:border-primary hover:bg-primary/50 cursor-pointer"
           on:click={() => {
-            dispatch("select", { weapon: selectedWeapon, ammo: 100 });
+            dispatch("select", { type: selectedAmmo, ammo: 100 });
           }}
         >
           +100
@@ -81,7 +81,7 @@
         <button
           class="p-2 border border-white/5 bg-white/5 rounded-xl hover:border-primary hover:bg-primary/50 cursor-pointer"
           on:click={() => {
-            dispatch("select", { weapon: selectedWeapon, ammo: 150 });
+            dispatch("select", { type: selectedAmmo, ammo: 150 });
           }}
         >
           +150
@@ -89,7 +89,7 @@
         <button
           class="p-2 border border-white/5 bg-white/5 rounded-xl hover:border-primary hover:bg-primary/50 cursor-pointer"
           on:click={() => {
-            dispatch("select", { weapon: selectedWeapon, ammo: 200 });
+            dispatch("select", { type: selectedAmmo, ammo: 200 });
           }}
         >
           +200

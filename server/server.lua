@@ -46,25 +46,27 @@ ESX.RegisterServerCallback('esx_admin:giveWeapon', function(src, cb, id, weapon)
         return
     end
 
+    print("Giving weapon " .. weapon .. " to " .. id)
+
     local xPlayer = ESX.GetPlayerFromId(id)
-    xPlayer.addWeapon(weapon, 0)
+    xPlayer.addInventoryItem(weapon, 1)
 
     ActionExecuted("giveWeapon", xPlayer.getName() .. " (" .. xPlayer.getIdentifier() .. ")")
 
-    cb()
+    cb(0, "Weapon given successfully")
 end)
 
-ESX.RegisterServerCallback('esx_admin:giveAmmo', function(src, cb, id, weapon, ammo)
+ESX.RegisterServerCallback('esx_admin:giveAmmo', function(src, cb, id, type, ammo)
     if not IsPlayerAceAllowed(src, "command.esxAdmin") then
         return
     end
 
     local xPlayer = ESX.GetPlayerFromId(id)
-    xPlayer.addWeaponAmmo(weapon, ammo)
+    xPlayer.addInventoryItem(type, ammo)
 
     ActionExecuted("giveAmmo", xPlayer.getName() .. " (" .. xPlayer.getIdentifier() .. ")")
 
-    cb()
+    cb(0, "Ammo given successfully")
 end)
 
 ESX.RegisterServerCallback('esx_admin:addMoney', function(src, cb, id, amount, method)
@@ -72,18 +74,23 @@ ESX.RegisterServerCallback('esx_admin:addMoney', function(src, cb, id, amount, m
         return
     end
 
-    print(id, amount, method)
-
     local xPlayer = ESX.GetPlayerFromId(id)
-    if method == "cash" then
-        xPlayer.addMoney(amount)
-    elseif method == "bank" then
-        xPlayer.addAccountMoney('bank', amount)
-    elseif method == "black" then
-        xPlayer.addAccountMoney('black_money', amount)
-    end
+    xPlayer.addAccountMoney(method, amount)
 
     ActionExecuted("addMoney", xPlayer.getName() .. " (" .. xPlayer.getIdentifier() .. ")")
 
-    cb()
+    cb(0, "Money added via " .. method .. " successfully")
+end)
+
+ESX.RegisterServerCallback('esx_admin:removeMoney', function(src, cb, id, amount, method)
+    if not IsPlayerAceAllowed(src, "command.esxAdmin") then
+        return
+    end
+
+    local xPlayer = ESX.GetPlayerFromId(id)
+    xPlayer.removeAccountMoney(method, amount)
+
+    ActionExecuted("removeMoney", xPlayer.getName() .. " (" .. xPlayer.getIdentifier() .. ")")
+
+    cb(0, "Money removed via " .. method .. " successfully")
 end)

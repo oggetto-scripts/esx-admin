@@ -54,28 +54,49 @@ end)
 
 -- Weapons Events
 RegisterNUICallback('giveWeapon', function(data, cb)
-  ESX.TriggerServerCallback('esx_admin:giveWeapon', function()
+  ESX.TriggerServerCallback('esx_admin:giveWeapon', function(status, message)
     SendNUIMessage({
       type = "notification",
-      message = "Weapon given"
+      data = {
+        message = message,
+        status = status,
+      }
     })
   end, data.id, data.weapon)
 end)
 
 RegisterNUICallback('giveAmmo', function(data, cb)
-  ESX.TriggerServerCallback('esx_admin:giveAmmo', function()
+  ESX.TriggerServerCallback('esx_admin:giveAmmo', function(status, message)
     SendNUIMessage({
       type = "notification",
-      message = "All weapons given"
+      data = {
+        message = message,
+        status = status,
+      }
     })
-  end, data.id, data.weapon, data.ammo)
+  end, data.id, data.type, data.ammo)
 end)
 
 RegisterNUICallback('addMoney', function(data, cb)
-  ESX.TriggerServerCallback('esx_admin:addMoney', function()
+  ESX.TriggerServerCallback('esx_admin:addMoney', function(status, message)
     SendNUIMessage({
       type = "notification",
-      message = "All weapons given"
+      data = {
+        message = message,
+        status = status,
+      }
+    })
+  end, data.id, data.amount, data.method)
+end)
+
+RegisterNUICallback('removeMoney', function(data, cb)
+  ESX.TriggerServerCallback('esx_admin:removeMoney', function(status, message)
+    SendNUIMessage({
+      type = "notification",
+      data = {
+        message = message,
+        status = status,
+      }
     })
   end, data.id, data.amount, data.method)
 end)
