@@ -1,11 +1,12 @@
 <script lang="ts">
-  import Icon from "./components/Icon.svelte";
+  import Icon from "@/components/Icon.svelte";
   import type { Player } from "@/types";
-  import { sendEvent } from "./utils/sendEvent";
-  import { useNuiEvent } from "./utils/useNuiEvent";
-  import Players from "./components/sections/Players.svelte";
-  import PlayerSec from "./components/sections/Player.svelte";
-  import PlayerSide from "./components/side/Player.svelte";
+  import { sendEvent } from "@/utils/sendEvent";
+  import { useNuiEvent } from "@/utils/useNuiEvent";
+  import Players from "@/components/sections/Players.svelte";
+  import PlayerSec from "@/components/sections/Player.svelte";
+  import PlayerSide from "@/components/side/Player.svelte";
+  import About from "@/components/sections/About.svelte";
 
   let section = 0;
   let currentOption = 0;
@@ -39,7 +40,7 @@
       icon: "commands",
     },
     {
-      title: "Help",
+      title: "About",
       icon: "help",
     },
   ];
@@ -126,6 +127,9 @@
           on:selectPlayer={handlePlayerChange}
           on:back={() => (section = 0)}
         />
+      {:else if section === 3}
+        <!-- First 3 sections are reserved for the options -->
+        <About on:back={() => (section = 0)} />
       {:else if section === 4}
         <!-- First 3 sections are reserved for the options -->
         <PlayerSec {player} on:back={() => (section = 1)} />
