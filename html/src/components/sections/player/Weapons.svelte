@@ -1,7 +1,7 @@
 <script lang="ts">
   import Icon from "@/components/Icon.svelte";
-  import WeaponSelector from "@/components/selectors/weapon/Weapon.svelte";
-  import WeaponAmmoSelector from "@/components/selectors/weapon/WeaponAmmo.svelte";
+  import Add from "@/components/selectors/weapon/Add.svelte";
+  import AddAmmo from "@/components/selectors/weapon/AddAmmo.svelte";
   import type { Player } from "@/types";
   import { sendEvent } from "@/utils/sendEvent";
   import { createEventDispatcher } from "svelte";
@@ -62,13 +62,13 @@
 </script>
 
 {#if weaponSelectorModal}
-  <WeaponSelector on:select={(e) => {
+  <Add on:select={(e) => {
     weaponSelectorModal = false;
     sendEvent("untrapMouse", {});
     sendEvent("giveWeapon", { id: player.id, weapon: e.detail });
   }} />
 {:else if ammoSelectorModal}
-  <WeaponAmmoSelector 
+  <AddAmmo 
     on:select={(e) => {
       ammoSelectorModal = false;
       sendEvent("untrapMouse", {});

@@ -19,8 +19,16 @@
         ammos.category.toLowerCase().includes(lowerCaseQuery)
     );
   };
+
+  const onKeyDown = (event: KeyboardEvent) => {
+    if (event.key === "Enter" && section === 1) {
+
+      dispatch("select", { type: selectedAmmo, ammo });
+    }
+  };
 </script>
 
+<svelte:window on:keydown={onKeyDown} />
 <div class="absolute inset-0 flex items-center justify-center bg-dark/70">
   <div class="bg-dark rounded-lg p-4 w-96">
     {#if section === 0}
@@ -59,6 +67,7 @@
         class="text-white bg-white/5 focus:outline-none border-2 border-primary rounded-lg p-2 w-full"
         placeholder="Enter ammo amount"
         pattern="[0-9]*"
+        on:input={(e) => (ammo = parseInt(e.target.value))}
       />
 
       <div class="pt-4 grid grid-cols-4 gap-x-4">
