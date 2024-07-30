@@ -108,12 +108,15 @@
             <span
               class={`${
                 currentOption === i ? "bg-primary text-black" : "bg-secondary"
-              } p-2 rounded-lg cursor-pointer transition font-semibold flex items-center`}
+              } p-2 rounded-lg cursor-pointer transition font-semibold flex items-center justify-between`}
             >
-              <div class="mr-2">
-                <Icon icon={option.icon} dark={currentOption === i} />
+              <div class="flex items-center">
+                <div class="mr-2">
+                  <Icon icon={option.icon} dark={currentOption === i} />
+                </div>
+                {option.title}
               </div>
-              {option.title}
+              <Icon icon="arrow" dark={currentOption === i} />
             </span>
           {/each}
         </div>

@@ -49,12 +49,16 @@
     <span
       class={`${
         currentPlayer === i ? "bg-primary text-black" : "bg-secondary"
-      } p-2 rounded-lg cursor-pointer transition font-semibold flex items-center`}
+      } p-2 rounded-lg cursor-pointer transition font-semibold flex items-center justify-between`}
     >
-      <div class="mr-2">
-        <Icon icon="player" dark={currentPlayer === i} />
+      <div class="flex items-center">
+        <div class="mr-2">
+          <Icon icon="player" dark={currentPlayer === i} />
+        </div>
+        {player.username} ({player.id})
+
       </div>
-      {player.username} ({player.id})
+      <Icon icon="arrow" dark={currentPlayer === i} />
     </span>
   {/each}
 </div>

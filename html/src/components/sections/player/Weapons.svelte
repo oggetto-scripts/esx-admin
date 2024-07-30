@@ -1,7 +1,7 @@
 <script lang="ts">
   import Icon from "@/components/Icon.svelte";
-  import Add from "@/components/selectors/weapon/Add.svelte";
-  import AddAmmo from "@/components/selectors/weapon/AddAmmo.svelte";
+  import Select from "@/components/selectors/weapon/Select.svelte";
+  import SelectAmmo from "@/components/selectors/weapon/SelectAmmo.svelte";
   import type { Player } from "@/types";
   import { sendEvent } from "@/utils/sendEvent";
   import { createEventDispatcher } from "svelte";
@@ -13,6 +13,8 @@
   let weaponSelectorModal = false;
   let ammoSelectorModal = false;
 
+  let isAdding = false;
+
   const dispatch = createEventDispatcher();
 
   const options = [
@@ -23,11 +25,31 @@
         sendEvent("trapMouse", {});
         dispatch("selection", {});
         weaponSelectorModal = true;
+        isAdding = true;
       },
     },
     {
       title: "Add Ammo",
       icon: "plus",
+      action: () => {
+        sendEvent("trapMouse", {});
+        dispatch("selection", {});
+        ammoSelectorModal = true;
+        isAdding = true;
+      },
+    },
+    {
+      title: "Remove Weapon",
+      icon: "minus",
+      action: () => {
+        sendEvent("trapMouse", {});
+        dispatch("selection", {});
+        weaponSelectorModal = true;
+      },
+    },
+    {
+      title: "Remove Ammo",
+      icon: "minus",
       action: () => {
         sendEvent("trapMouse", {});
         dispatch("selection", {});
@@ -62,17 +84,29 @@
 </script>
 
 {#if weaponSelectorModal}
-  <Add on:select={(e) => {
+  <Select on:select={(e) => {
     weaponSelectorModal = false;
     sendEvent("untrapMouse", {});
-    sendEvent("giveWeapon", { id: player.id, weapon: e.detail });
+    
+    if (isAdding) {
+      sendEvent("giveWeapon", { id: player.id, weapon: e.detail });
+      isAdding = false;
+    } else {
+      sendEvent("removeWeapon", { id: player.id, weapon: e.detail });
+    }
   }} />
 {:else if ammoSelectorModal}
-  <AddAmmo 
+  <SelectAmmo 
     on:select={(e) => {
       ammoSelectorModal = false;
       sendEvent("untrapMouse", {});
-      sendEvent("giveAmmo", { id: player.id, type: e.detail.type, ammo: e.detail.ammo });
+
+      if (isAdding) {
+        sendEvent("giveAmmo", { id: player.id, type: e.detail.type, ammo: e.detail.ammo });
+        isAdding = false;
+      } else {
+        sendEvent("removeAmmo", { id: player.id, type: e.detail.type, ammo: e.detail.ammo });
+      }
     }}
   />
 {/if}

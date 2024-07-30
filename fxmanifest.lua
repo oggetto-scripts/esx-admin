@@ -6,14 +6,20 @@ version '1.0.0'
 
 ui_page 'html/dist/index.html'
 
+shared_script '@es_extended/imports.lua'
+
 client_scripts {
-    'client/*.lua'
-} 
+    'client/**/*.lua'
+}
 
 server_scripts {
-    'server/*.lua'
+    'server/**/*.lua'
 }
 
 files {
     'html/dist/**/*',
+}
+
+dependencies {
+    'es_extended'
 }
