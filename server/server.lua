@@ -12,29 +12,20 @@ ESX.RegisterServerCallback('esx_admin:get_players', function(src, cb)
     local players = GetPlayers()
     local playerList = {}
     for i = 1, #players, 1 do
-        local xPlayer = ESX.GetPlayerFromId(players[i])
-        local ped = GetPlayerPed(players[i])
+        local player = getPlayer(players[i])
 
-        table.insert(playerList, {
-            id = xPlayer.source,
-            name = xPlayer.getName(),
-            username = GetPlayerName(xPlayer.source),
-            identifier = xPlayer.getIdentifier(),
-            job = {
-                name = xPlayer.job.name,
-                grade = xPlayer.job.grade
-            },
-            group = xPlayer.getGroup(),
-            money = xPlayer.getMoney(),
-            bank = xPlayer.getAccount('bank').money,
-            black_money = xPlayer.getAccount('black_money').money,
-            ped = {
-                model = GetEntityModel(ped),
-                health = GetEntityHealth(ped),
-                armor = GetPedArmour(ped),
-                coords = GetEntityCoords(ped)
-            }
-        })
+        table.insert(playerList, player)
     end
     cb(playerList)
+end)
+
+ESX.RegisterServerCallback('esx_admin:get_player_vehicles', function(src, cb, id)
+    if not IsPlayerAceAllowed(src, "command.esxAdmin") then
+        return
+    end
+
+    local xPlayer = ESX.GetPlayerFromId(id)
+    local vehicles = getPlayerVehicles(xPlayer)
+    
+    cb(vehicles, id)
 end)

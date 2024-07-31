@@ -26,3 +26,15 @@ export interface Player {
   black_money: number;
   ped: Ped;
 }
+
+export interface Vehicle {
+  plate: string;
+  mileage: number;
+  type: string;
+  owner: Player;
+  stored: boolean;
+  model: {
+    name: string;
+    hash: number;
+  };
+}

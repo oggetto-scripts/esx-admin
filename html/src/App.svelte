@@ -15,7 +15,7 @@
   let players: Player[];
   let player: Player;
 
-  let showNotification = false;
+  let showNotification = false; 
   let notificationData = { status: 0, message: "" };
 
   useNuiEvent<Player[]>("players", (data) => {
