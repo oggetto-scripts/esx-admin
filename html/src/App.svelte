@@ -62,7 +62,7 @@
       } else {
         currentOption = 0;
       }
-    } else if (event.key === "Escape") {
+    } else if (event.key === "Escape" || event.key === "Backspace") {
       sendEvent("close", {});
       section = 0;
     } else if (event.key === "Enter") {
